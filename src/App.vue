@@ -8,15 +8,26 @@
         你选择的数字是{{selectNum}},字符串是{{copyNum}}
       </div>
       <div>结果是: {{overText}}</div>
+      <div>
+        <span>{{nowTime}}</span>
+        <button @click="getNowTime">当前时间</button>
+      </div>
+      <Modal/>
   </div>
 </template>
 
 <script lang="ts">
 // import { ref, reactive } from 'vue'
 import { reactive, toRefs, onRenderTracked, onRenderTriggered, watch } from 'vue'
+// 模块化
+import { nowTime, getNowTime } from './hooks/useNowTime'
+import Modal from './components/modal.vue'
 
 export default {
   name: 'App',
+  components: {
+    Modal
+  },
   setup () {
     // 使用ref定义响应式变量
     // const btnList = ref([1, 2, 3]) // 使用ref初始值，需要使用value来获取
@@ -64,7 +75,9 @@ export default {
     })
     const refData = toRefs(data) // 方便使用解构符号，使其解构的时不会变成普通对象
     return {
-      ...refData
+      ...refData,
+      nowTime,
+      getNowTime
     }
     // vue3生命周期和钩子函数
     // setup() :开始创建组件之前，在beforeCreate和created之前执行。创建的是data和method
